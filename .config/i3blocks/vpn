@@ -1,0 +1,25 @@
+#!/bin/bash
+
+INTERFACE="${BLOCK_INSTANCE:-wlan0}"
+[[ ! -d /sys/class/net/${INTERFACE}/wireless ]] ||
+    [[ "$(cat /sys/class/net/$INTERFACE/operstate)" = 'down' ]] && exit
+
+VPN=$(expressvpn status | head -n 1 | sed 's/^[^m]*m//g')
+STATE=$(echo $VPN | cut -d ' ' -f 1)
+LOCATION=$(echo $VPN | cut -d ' ' -f 3-)
+
+case $STATE in
+"Not")
+  exit
+  ;;
+"Connecting")
+  echo "- connecting to VPN.."
+  ;;
+"Connected")
+  echo "via $LOCATION"
+  ;;
+*)
+  echo "VPN-Error"
+  ;;
+esac
+

@@ -1,0 +1,45 @@
+command=$HOME/.config/i3blocks/$BLOCK_NAME
+interval=1
+separator=false
+separator_block_width=15
+markup=none
+
+[cpu]
+
+[mpd]
+
+[pacman]
+interval=once
+signal=12
+
+[mail]
+interval=once
+signal=11
+
+[volume]
+interval=once
+signal=10
+
+[df root]
+command=echo "/:$(df /root | tail -n 1 | awk '{ print $5 }')"
+interval=10
+
+[df home]
+command=echo "~:$(df /home | tail -n 1 | awk '{ print $5 }')"
+interval=10
+
+[wifi]
+instance=wlp2s0
+
+[vpn]
+instance=wlp2s0
+
+
+[battery]
+interval=5
+
+[keyboard]
+command=setxkbmap -query | grep layout | awk '{ print $2 }'
+interval=5
+
+[date]

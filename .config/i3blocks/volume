@@ -1,0 +1,11 @@
+#!/bin/sh
+
+MUTE=$(amixer sget Master | egrep "\[on\]")
+VOL=$(amixer sget Master -M | tail -n 1 | egrep -o '\[[0-9]+%\]' | egrep -o '[0-9]+')
+
+if [[ -z $MUTE ]]; then
+  echo ""
+else
+  echo ":$VOL%"
+fi
+

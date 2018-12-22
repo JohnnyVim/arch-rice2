@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [[ $BLOCK_BUTTON = 1 ]]; then
+  offlineimap -q
+fi
+
+NEW=$(ls -1 ~/.mail/*/INBOX/new | wc -l)
+
+if [[ $NEW != 0 ]]; then
+  echo ":$NEW"
+else
+  echo 
+fi
+
