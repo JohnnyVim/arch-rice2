@@ -1,0 +1,3 @@
+#!/bin/bash
+
+pdfunite $(cat $HOME/.nnncp) unite-$(date '+%F-%H%M%S').pdf

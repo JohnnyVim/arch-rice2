@@ -12,9 +12,9 @@ markup=none
 interval=once
 signal=12
 
-[mail]
-interval=once
-signal=11
+#[mail]
+#interval=once
+#signal=11
 
 [volume]
 interval=once
@@ -31,8 +31,8 @@ interval=10
 [wifi]
 instance=wlp2s0
 
-[vpn]
-instance=wlp2s0
+#[vpn]
+#instance=wlp2s0
 
 
 [battery]

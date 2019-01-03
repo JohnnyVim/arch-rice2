@@ -37,7 +37,7 @@ gaps outer 2
 gaps inner 8
 
 bar {
-  font pango:monospace 11
+  font pango:mono 11
   status_command i3blocks
   position top
   strip_workspace_numbers yes
@@ -157,8 +157,8 @@ bindsym $mod+Shift+l			move right 100
 
 #--------------------MEDIA-KEYS--------------------------------------------------------------------#
 bindsym XF86AudioMute			exec --no-startup-id amixer set Master toggle; exec pkill -RTMIN+10 i3blocks
-bindsym XF86AudioLowerVolume		exec --no-startup-id amixer set Master 5%-; exec pkill -RTMIN+10 i3blocks
-bindsym XF86AudioRaiseVolume		exec --no-startup-id amixer set Master 5%+; exec pkill -RTMIN+10 i3blocks
+bindsym XF86AudioLowerVolume		exec --no-startup-id amixer set Master -M 5%- unmute; exec pkill -RTMIN+10 i3blocks
+bindsym XF86AudioRaiseVolume		exec --no-startup-id amixer set Master -M 5%+ unmute; exec pkill -RTMIN+10 i3blocks
 bindsym XF86AudioPrev			exec --no-startup-id mpc prev
 bindcode 172				exec --no-startup-id mpc toggle
 bindsym XF86AudioNext			exec --no-startup-id mpc next
@@ -223,8 +223,8 @@ bindsym $mod+Shift+q			kill
 bindsym $mod+w				exec GTK_THEME=Adwaita:light waterfox
 bindsym $mod+Shift+w			exec GTK_THEME=Adwaita:light waterfox -private-window
 
-bindsym $mod+e				exec $terminal -e ranger
-bindsym $mod+Shift+e			exec $terminal -e sudo ranger /
+bindsym $mod+e				exec $terminal -e nnn
+bindsym $mod+Shift+e			exec $terminal -e sudo nnn /
 
 bindsym $mod+r				mode "resize"
 bindsym $mod+Shift+r			restart
