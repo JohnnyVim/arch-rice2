@@ -1,28 +1,101 @@
+"===============================================================
+" default options
+"===============================================================
 set nocompatible
-set path+=**
-set wildmenu
-set number
-set background=dark
-set smartindent
-set expandtab
-set shiftwidth=2
-set softtabstop=2
 
-syntax on
-filetype plugin on
+set backspace=indent,eol,start
+set display=truncate
+set history=200
+set incsearch
+set nrformats-=octal
+set ruler
+set scrolloff=5
+set showcmd
+set ttimeout
+set ttimeoutlen=100
+set wildmenu
+
+augroup vimStartup
+  au!
+  autocmd BufReadPost *
+    \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+    \ |   exe "normal! g`\""
+    \ | endif
+augroup END
+
+command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+                \ | wincmd p | diffthis
+
+set nolangremap
+
+"===============================================================
+" plugin installation
+"===============================================================
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'dense-analysis/ale'
+Plug 'fatih/vim-go', { 'tag': '*' }
+call plug#end()
+
+"===============================================================
+" dense-analysis/ale
+"===============================================================
+
+let g:deoplete#enable_at_startup = 1
+let g:ale_linters = {
+\ 'go': ['gopls'],
+\}
+
+let g:ale_fixers = {
+\ '*': ['remove_trailing_lines', 'trim_whitespace'],
+\ 'go': ['gofmt', 'goimports'],
+\ 'sh': ['shfmt'],
+\}
+
+let g:ale_sh_shfmt_options = "-i 2"
+
+let g:ale_completion_enabled = 1
+
+"===============================================================
+" NLKNguyen/papercolor-theme
+"===============================================================
+
+set background=dark
 colorscheme PaperColor
 
-command! MakeTags !ctags -R .
+let g:PaperColor_Theme_Options = {
+\ 'theme': {
+\   'default.dark': {
+\     'override' : {
+\       'color00' : ['', '0'],
+\       'linenumber_bg' : ['', '0']
+\     }
+\   }
+\ }
+\}
 
-let g:netrw_banner=0
-let g:netrw_browse_split=4
-let g:netrw_altv=1
-let g:netrw_liststyle=3
 
-vmap <c-x> "+x
-vmap <c-c> "+y
-imap <c-v> <ESC>"+pa
+"===============================================================
+" custom options
+"===============================================================
 
-autocmd FileType java nmap ,psvm ipublic static void main(String[] args) {<CR>}<ESC>O  
-autocmd FileType java nmap ,sopl aSystem.out.println("");<ESC>2hi
-autocmd FileType java nmap ,fori ifor (int i = 0, i < , i++) {<CR>}<ESC>kf<la
+set number
+
+set ignorecase
+set smartcase
+
+syntax enable
+filetype plugin on
+
+"===============================================================
+" keybindings
+"===============================================================
+
+nnoremap Q :ALEFix<CR>
